@@ -38,7 +38,7 @@ export default function Navbar() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center">
@@ -135,7 +135,7 @@ export default function Navbar() {
               <span className="sr-only">Open menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-80 bg-white p-3">
+          <SheetContent side="right" className="w-80  backdrop-blur p-3">
             <div className="flex flex-col gap-6 mt-8">
               {/* Main Links */}
               {navItems.map((item) => (
