@@ -1,11 +1,10 @@
-import React from 'react';
 
-const layout = () => {
+import { ReactNode } from 'react';
+
+export default function AuthLayout({ children }: { children: ReactNode }) {
     return (
         <div>
-           Auth layout
+            {children}
         </div>
     );
-};
-
-export default layout;
+}
