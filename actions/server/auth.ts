@@ -2,6 +2,7 @@
 
 import { collections, dbConnect } from "@/lib/dbConnect";
 import bcrypt from "bcryptjs";
+import { email } from "zod";
 
 
 type UserPayload = {
@@ -43,3 +44,25 @@ export const postUser = async (payload: UserPayload) => {
 };
 
 
+type loginUserPayload = {
+    email: string;
+    password: string;
+    remember?: boolean;
+};
+export const loginUser = async(payload: loginUserPayload)=>{
+        const { email, password, remember } = payload;
+    // check payload
+    if (!email || !password) return null;
+
+    const userCollection = await dbConnect(collections.USERS);
+    const user = await userCollection.findOne({ email });
+    if(!user) return null;
+
+    const isMatched = await bcrypt.compare(password, user.password);
+    if(isMatched){
+        return user;
+    }else{
+        return null;
+    }
+
+}

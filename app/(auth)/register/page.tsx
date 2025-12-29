@@ -45,6 +45,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { postUser } from '@/actions/server/auth';
+import Link from 'next/link';
 
 const formSchema = z.object({
   nidNo: z.string().min(1, { message: "NID No is required" }),
@@ -240,9 +241,9 @@ const Register: React.FC = () => {
           <CardFooter className="flex justify-center">
             <p className="text-sm text-[#323940]/70">
               Already have an account?{' '}
-              <a href="/login" className="font-semibold text-[#ff0099] hover:text-[#ff0064] transition-colors">
+              <Link href="/login" className="font-semibold text-[#ff0099] hover:text-[#ff0064] transition-colors">
                 Log In
-              </a>
+              </Link>
             </p>
           </CardFooter>
         </Card>
