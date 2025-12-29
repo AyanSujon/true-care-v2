@@ -44,6 +44,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { postUser } from '@/actions/server/auth';
 
 const formSchema = z.object({
   nidNo: z.string().min(1, { message: "NID No is required" }),
@@ -81,11 +82,18 @@ const Register: React.FC = () => {
   const onSubmit = async (data: FormValues) => {
     // Simulate registration (replace with your actual API call)
     console.log('Registration data:', data);
+    const result = await postUser(data);
+    if(result.acknowledged){
+      console.log("After successfully saved data in database", result)
+      router.push("/login");
+    }
+
     
     // In real app: await registerUser(data);
     
     // Redirect to booking page after successful registration
-    router.push('/booking');
+    // router.push('/booking');
+
   };
 
   return (
