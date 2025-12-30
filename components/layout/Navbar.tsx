@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Logo from '../common/Logo';
 import { cn } from '@/lib/utils';
+import AuthButtons from '../buttons/AuthButtons';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -39,7 +40,7 @@ export default function Navbar() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur">
+      <header className="max-w-7xl mx-auto sticky top-0 z-50 w-full bg-background/95 backdrop-blur">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center">
@@ -111,14 +112,15 @@ export default function Navbar() {
 
         {/* Desktop Buttons */}
         <div className="hidden md:flex items-center gap-4">
-          <Button
+          {/* <Button
             variant="ghost"
             size="sm"
             asChild
             className="hover:bg-[#6632ae] text-[#6632ae] hover:text-white transition-colors border border-[#6632ae]/30"
           >
             <Link href="/login">Login</Link>
-          </Button>
+          </Button> */}
+          <AuthButtons/>
           <Button
             size="sm"
             className="bg-[#ff0099] hover:bg-[#ff0099]/90 text-white shadow-lg shadow-[#ff0099]/20"
@@ -196,13 +198,14 @@ export default function Navbar() {
 
               {/* Mobile Buttons */}
               <div className="space-y-3 pt-6 border-t border-[#6632ae]">
-                <Button
+                {/* <Button
                   variant="outline"
                   className="w-full hover:bg-[#6632ae] text-[#6632ae] hover:text-white transition-colors border border-[#6632ae]/30"
                   asChild
                 >
                   <Link href="/login">Login</Link>
-                </Button>
+                </Button> */}
+                  <AuthButtons/>
                 <Button
                   className="w-full bg-[#ff0099] hover:bg-[#ff0099]/90 text-white shadow-lg shadow-[#ff0099]/20"
                   asChild

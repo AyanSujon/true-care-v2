@@ -63,7 +63,7 @@ export const authOptions: NextAuthOptions = {
         if (!user) return null;
 
         return {
-          id: user._id.toString(), // 🔴 MUST be string
+          id: user._id.toString(), 
           email: user.email,
           name: user.name,
         };
