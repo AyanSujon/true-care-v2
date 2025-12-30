@@ -182,6 +182,9 @@ import { Button } from '@/components/ui/button';
 import { Heart, Mail, Lock, Baby, Users } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Swal from 'sweetalert2'
+import { useRouter } from 'next/navigation';
+
 
 type LoginFormValues = {
   email: string;
@@ -190,13 +193,35 @@ type LoginFormValues = {
 };
 
 const Login: React.FC = () => {
+  const router = useRouter();
   const { register, handleSubmit } = useForm<LoginFormValues>();
 
-  const onSubmit: SubmitHandler<LoginFormValues> = async(data) => {
-    console.log(data); // form data here
-    const result = await signIn('credentials', {email: data.email, password: data.password, remember: data.remember, redirect: false});
 
-  };
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
+  const result = await signIn('credentials', {
+    email: data.email,
+    password: data.password,
+    remember: data.remember,
+    redirect: false,
+  });
+
+  if (!result?.ok) {
+    Swal.fire("Error", "Email or password not matched", "error");
+  } else {
+    // Successful login
+    Swal.fire({
+      title: 'Logged in!',
+      text: 'You have successfully logged in.',
+      icon: 'success',
+      confirmButtonText: 'Continue'
+    }).then(() => {
+      // Optional: redirect after confirmation
+      // window.location.href = '/dashboard'; 
+      router.push("/");
+
+    });
+  }
+};
 
   return (
     <div className="min-h-screen py-10 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
