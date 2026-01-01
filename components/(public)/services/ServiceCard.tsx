@@ -74,7 +74,7 @@ export default function ServiceCard({
           href={`/services/${id}`}
           className="w-full block text-center rounded-lg bg-pink-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-pink-700 transition-colors"
         >
-          Book Now
+          View Details
         </Link>
       </div>
     </Card>
