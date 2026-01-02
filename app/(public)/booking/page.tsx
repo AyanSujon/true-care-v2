@@ -1,5 +1,6 @@
 
 
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -16,10 +17,25 @@ import { Toaster } from "@/components/ui/sonner";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { CalendarIcon, Clock, CheckCircle } from "lucide-react";
+import { CalendarIcon, CheckCircle } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { getSingleProduct } from "@/actions/server/services";
+
+// React Hook Form + Zod
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+// Form schema
+const bookingSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().regex(/^[\+]?[1-9][\d]{0,15}$/, "Invalid phone number"),
+  notes: z.string().optional(),
+});
+
+type BookingFormData = z.infer<typeof bookingSchema>;
 
 const timeSlots = [
   "09:00 AM", "10:00 AM", "11:00 AM",
@@ -40,6 +56,15 @@ export default function BookingPage() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<BookingFormData>({
+    resolver: zodResolver(bookingSchema),
+    mode: "onChange",
+  });
+
   useEffect(() => {
     if (!serviceId) {
       setLoading(false);
@@ -55,19 +80,25 @@ export default function BookingPage() {
     fetchService();
   }, [serviceId]);
 
-  // Safe price extraction — handles missing, undefined, number, or string
   const basePrice = service && service.price
     ? parseFloat(String(service.price).replace(/[^\d.]/g, "")) || 0
     : 0;
 
   const totalPrice = basePrice * duration;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async (data: BookingFormData) => {
     setSubmitting(true);
 
-    // Simulate processing time
     await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    console.log("Booking Data:", {
+      ...data,
+      serviceId,
+      date: date && format(date, "PPP"),
+      time: selectedTime,
+      duration,
+      totalPrice,
+    });
 
     setSuccess(true);
     toast.success("Booking Request Submitted! 🎉", {
@@ -75,6 +106,8 @@ export default function BookingPage() {
     });
     setSubmitting(false);
   };
+
+  const isBookingComplete = !!date && !!selectedTime;
 
   if (loading) {
     return (
@@ -94,7 +127,6 @@ export default function BookingPage() {
     );
   }
 
-  // Success Screen
   if (success) {
     return (
       <div className="container mx-auto px-4 py-20 max-w-4xl text-center">
@@ -129,8 +161,7 @@ export default function BookingPage() {
             <img
               src={service.image || "/placeholder.svg"}
               alt={service.title}
-              className="object-cover"
-
+              className="object-cover w-full h-full"
             />
           </div>
 
@@ -164,73 +195,75 @@ export default function BookingPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-7">
-              {/* Date */}
-              <div className="space-y-3">
-                <Label className="text-base">Preferred Date *</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal text-base h-12",
-                        !date && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-3 h-5 w-5" />
-                      {date ? format(date, "PPP") : <span>Pick a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={date}
-                      onSelect={setDate}
-                      disabled={(d) => d < new Date() || d.getDay() === 0}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+              {/* Preferred Date & Duration in ONE ROW */}
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Date */}
+                <div className="space-y-3">
+                  <Label className="text-base">Preferred Date *</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal text-base h-12",
+                          !date && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-3 h-5 w-5" />
+                        {date ? format(date, "PPP") : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 bg-white">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        disabled={(d) => d < new Date() || d.getDay() === 0}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+
+                {/* Duration */}
+                <div className="space-y-3">
+                  <Label className="text-base">Duration *</Label>
+                  <Select value={duration.toString()} onValueChange={(v) => setDuration(Number(v))}>
+                    <SelectTrigger className="h-12 text-base">
+                      <SelectValue placeholder="Select duration" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {durationOptions.map((h) => (
+                        <SelectItem key={h} value={h.toString()}>
+                          {h} hour{h > 1 ? "s" : ""}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              {/* Time */}
+              {/* Preferred Time */}
               <div className="space-y-3">
                 <Label className="text-base">Preferred Time *</Label>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="flex flex-wrap gap-3">
                   {timeSlots.map((time) => (
                     <button
                       key={time}
                       type="button"
                       onClick={() => setSelectedTime(time)}
                       className={cn(
-                        "flex items-center justify-center rounded-lg border-2 py-4 text-base font-medium transition-all",
+                        "px-3 py-2 rounded-md text-sm font-medium transition-colors",
                         selectedTime === time
-                          ? "border-pink-600 bg-pink-50 text-pink-700 shadow-md"
-                          : "border-gray-300 hover:border-pink-300 hover:bg-pink-50"
+                          ? "bg-pink-600 text-white"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                       )}
                     >
-                      <Clock className="mr-2 h-5 w-5" />
                       {time}
                     </button>
                   ))}
                 </div>
-              </div>
-
-              {/* Duration */}
-              <div className="space-y-3">
-                <Label className="text-base">Duration *</Label>
-                <Select value={duration.toString()} onValueChange={(v) => setDuration(Number(v))}>
-                  <SelectTrigger className="h-12 text-base">
-                    <SelectValue placeholder="Select duration" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {durationOptions.map((h) => (
-                      <SelectItem key={h} value={h.toString()}>
-                        {h} hour{h > 1 ? "s" : ""}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
               </div>
 
               {/* Total Price */}
@@ -247,21 +280,44 @@ export default function BookingPage() {
               <div className="space-y-5">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-base">Full Name *</Label>
-                  <Input id="name" name="name" required placeholder="John Doe" className="h-12 text-base" />
+                  <Input
+                    id="name"
+                    {...register("name")}
+                    placeholder="John Doe"
+                    className="h-12 text-base"
+                  />
+                  {errors.name && <p className="text-sm text-red-600">{errors.name.message}</p>}
                 </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-base">Email *</Label>
-                  <Input id="email" name="email" type="email" required placeholder="john@example.com" className="h-12 text-base" />
+                  <Input
+                    id="email"
+                    type="email"
+                    {...register("email")}
+                    placeholder="john@example.com"
+                    className="h-12 text-base"
+                  />
+                  {errors.email && <p className="text-sm text-red-600">{errors.email.message}</p>}
                 </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="phone" className="text-base">Phone Number *</Label>
-                  <Input id="phone" name="phone" type="tel" required placeholder="+1 (555) 123-4567" className="h-12 text-base" />
+                  <Input
+                    id="phone"
+                    type="tel"
+                    {...register("phone")}
+                    placeholder="+1 (555) 123-4567"
+                    className="h-12 text-base"
+                  />
+                  {errors.phone && <p className="text-sm text-red-600">{errors.phone.message}</p>}
                 </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="notes" className="text-base">Additional Notes (optional)</Label>
                   <Textarea
                     id="notes"
-                    name="notes"
+                    {...register("notes")}
                     placeholder="Any special requirements, medical info, or preferences..."
                     rows={5}
                     className="text-base"
@@ -273,7 +329,7 @@ export default function BookingPage() {
                 type="submit"
                 size="lg"
                 className="w-full text-lg h-14 bg-gradient-to-r from-pink-600 to-pink-500 hover:from-pink-700 hover:to-pink-600 shadow-lg"
-                disabled={!date || !selectedTime || submitting}
+                disabled={!isBookingComplete || submitting || !isValid}
               >
                 {submitting ? "Processing Request..." : "Submit Booking Request"}
               </Button>
@@ -286,6 +342,32 @@ export default function BookingPage() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
