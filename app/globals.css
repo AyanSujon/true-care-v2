@@ -1,39 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght,YOPQ@100..900,300&family=Sniglet:wght@400;800&display=swap');
 @import "tailwindcss";
-@import "tw-animate-css";
- 
-@custom-variant dark (&:where([data-theme=night], [data-theme=night] *));
+
+@theme {
+  /* This maps the CSS variable to a Tailwind color utility */
+  --color-border: var(--border);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ring: var(--ring);
+  
+  /* Your Brand Colors */
+  --color-brand-primary: #ff0099;
+  --color-brand-secondary: #ff0064;
+  --color-brand-accent: #6632ae;
+  --color-brand-neutral: #323940;
+
+  /* Sidebar Specific Mappings */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent: var(--sidebar-accent);
+}
 
 :root {
-   --sidebar: hsl(0 0% 98%);
-   --sidebar-foreground: hsl(240 5.3% 26.1%);
-   --sidebar-primary: hsl(240 5.9% 10%);
-   --sidebar-primary-foreground: hsl(0 0% 98%);
-   --sidebar-accent: hsl(240 4.8% 95.9%);
-   --sidebar-accent-foreground: hsl(240 5.9% 10%);
-   --sidebar-border: hsl(220 13% 91%);
-   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  /* These are the actual values Tailwind will use */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  
+  /* THIS LINE FIXES THE ERROR */
+  --border: oklch(0.922 0 0); 
+  
+  --ring: oklch(0.707 0.022 261.325);
+
+  /* Sidebar variables for True Care */
+  --sidebar: oklch(0.32 0 0); /* Dark Neutral #323940 approx */
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: #ff0099;
+  --sidebar-border: oklch(0.45 0 0);
+  --sidebar-accent: #ff0064;
 }
 
-.dark {
-   --sidebar: hsl(240 5.9% 10%);
-   --sidebar-foreground: hsl(240 4.8% 95.9%);
-   --sidebar-primary: hsl(224.3 76.3% 48%);
-   --sidebar-primary-foreground: hsl(0 0% 100%);
-   --sidebar-accent: hsl(240 3.7% 15.9%);
-   --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-   --sidebar-border: hsl(240 3.7% 15.9%);
-   --sidebar-ring: hsl(217.2 91.2% 59.8%);
+@layer base {
+  * {
+    /* Now 'border-border' will be recognized */
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
-
-@theme inline {
-   --color-sidebar: var(--sidebar);
-   --color-sidebar-foreground: var(--sidebar-foreground);
-   --color-sidebar-primary: var(--sidebar-primary);
-   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-   --color-sidebar-accent: var(--sidebar-accent);
-   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-   --color-sidebar-border: var(--sidebar-border);
-   --color-sidebar-ring: var(--sidebar-ring);
-}
-
