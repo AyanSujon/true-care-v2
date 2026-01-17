@@ -58,6 +58,7 @@ import "./globals.css";
 // import Navbar from "@/components/layout/Navbar";
 // import Footer from "@/components/layout/Footer";
 import NextAuthProvider from "@/provider/NextAuthProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const sniglet = Sniglet({
   weight: ["400", "800"], // Regular and ExtraBold (common weights available)
@@ -90,6 +91,7 @@ export default function RootLayout({
         <NextAuthProvider>
           {/* <Navbar /> */}
           <main>
+            <Toaster richColors position="top-center" />
             {children}
           </main>
           {/* <Footer /> */}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import { signIn } from 'next-auth/react';
-import Swal from 'sweetalert2';
+import { toast } from "sonner";
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const SocialButtons = () => {
@@ -9,29 +9,48 @@ const SocialButtons = () => {
     const router = useRouter();
     const callbackUrl = params.get("callbackUrl") || "/dashboard";
 
-    const handleGoogleSignIn = async () => {
+const handleGoogleSignIn = async () => {
+    try {
         const result = await signIn("google", {
             redirect: false,
-            callbackUrl, 
+            callbackUrl,
         });
 
-        // If error returned
-        if (!result || result.error) {
-            Swal.fire("Error", "Google sign-in failed. Please try again.", "error");
-            return;
+        // Defensive check
+        if (!result) {
+            throw new Error("Google sign-in failed. Please try again.");
         }
 
-        // Success popup
-        Swal.fire({
-            title: "Logged in!",
-            text: "You have successfully logged in with Google.",
-            icon: "success",
-            confirmButtonText: "Continue"
-        }).then(() => {
-            // redirect user to original protected page
-            router.push(result.url || callbackUrl);
+        if (result.error) {
+            throw new Error(result.error);
+        }
+
+        if (!result.ok) {
+            throw new Error("Google sign-in was not successful. Please try again.");
+        }
+
+        // Success toast
+        toast.success("Logged in successfully!", {
+            description: "You have signed in with Google 🎉",
         });
-    };
+
+        // Redirect safely
+        router.push(result.url || callbackUrl);
+
+    } catch (error: unknown) {
+        console.error("Google Sign-in error:", error);
+
+        const message =
+            error instanceof Error
+                ? error.message
+                : "Unexpected error occurred. Please try again.";
+
+        // Error toast
+        toast.error("Login Failed", {
+            description: message,
+        });
+    }
+};
 
 
     return (
