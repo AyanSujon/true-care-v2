@@ -1,0 +1,46 @@
+// import { NextResponse } from 'next/server'
+// import type { NextRequest } from 'next/server'
+ 
+// // This function can be marked `async` if using `await` inside
+// export function proxy(request: NextRequest) {
+// const isLoggedin = request.cookies.get("next-auth.session-token")?.value
+
+// if(!isLoggedin){
+    
+//     return NextResponse.redirect(new URL('/login', request.url))
+// }
+// return NextResponse.next();
+// }
+ 
+// // Alternatively, you can use a default export:
+// // export default function proxy(request: NextRequest) { ... }
+ 
+// export const config = {
+//   matcher: ['/dashboard/:path*', '/booking/:path*'],
+// }
+
+
+
+
+
+
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export function proxy(request: NextRequest) {
+  const isLoggedin = request.cookies.get("next-auth.session-token")?.value
+
+  if (!isLoggedin) {
+    const callbackUrl = request.nextUrl.pathname + request.nextUrl.search
+
+    return NextResponse.redirect(
+      new URL(`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`, request.url)
+    )
+  }
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ['/dashboard/:path*', '/booking/:path*'],
+}

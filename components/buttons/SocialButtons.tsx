@@ -6,29 +6,31 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 const SocialButtons = () => {
     const params = useSearchParams();
-    // console.log(params.get("callbackUrl" || "/"));
     const router = useRouter();
+    const callbackUrl = params.get("callbackUrl") || "/dashboard";
+
     const handleGoogleSignIn = async () => {
-        const result = await signIn('google', {
-            redirect: false, callbackUrl: params.get("callbackUrl") || "/",
+        const result = await signIn("google", {
+            redirect: false,
+            callbackUrl, 
         });
 
-
-
-
-        console.log(result)
-        if (result?.error) {
-            Swal.fire("Error", "Google sign in failed. Please try again.", "error");
-        } else {
-            Swal.fire({
-                title: 'Logged in!',
-                text: 'You have successfully logged in with Google.',
-                icon: 'success',
-                confirmButtonText: 'Continue'
-            }).then(() => {
-                router.push("/");
-            });
+        // If error returned
+        if (!result || result.error) {
+            Swal.fire("Error", "Google sign-in failed. Please try again.", "error");
+            return;
         }
+
+        // Success popup
+        Swal.fire({
+            title: "Logged in!",
+            text: "You have successfully logged in with Google.",
+            icon: "success",
+            confirmButtonText: "Continue"
+        }).then(() => {
+            // redirect user to original protected page
+            router.push(result.url || callbackUrl);
+        });
     };
 
 
