@@ -24,13 +24,54 @@
 
 
 
+// import { NextResponse } from 'next/server'
+// import type { NextRequest } from 'next/server'
+
+// export function proxy(request: NextRequest) {
+//   const isLoggedin = request.cookies.get("next-auth.session-token")?.value
+
+//   if (!isLoggedin) {
+//     const callbackUrl = request.nextUrl.pathname + request.nextUrl.search
+
+//     return NextResponse.redirect(
+//       new URL(`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`, request.url)
+//     )
+//   }
+
+//   return NextResponse.next()
+// }
+
+// export const config = {
+//   matcher: ['/dashboard/:path*', '/booking/:path*'],
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { getToken } from 'next-auth/jwt'
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextRequest } from 'next/server'
 
-export function proxy(request: NextRequest) {
-  const isLoggedin = request.cookies.get("next-auth.session-token")?.value
+export async function proxy(request: NextRequest) {
+const token = await getToken({req: request})
+console.log(token)
 
-  if (!isLoggedin) {
+const isAuthenticated = Boolean(token);
+
+
+
+
+  if (!isAuthenticated) {
     const callbackUrl = request.nextUrl.pathname + request.nextUrl.search
 
     return NextResponse.redirect(
