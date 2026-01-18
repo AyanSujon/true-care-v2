@@ -331,9 +331,552 @@
 
 
 
-'use client';
+// "use client";
 
-import React from 'react';
+// import { signIn } from "next-auth/react"
+// import { useForm, SubmitHandler } from 'react-hook-form';
+// import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+// import { Input } from '@/components/ui/input';
+// import { Label } from '@/components/ui/label';
+// import { Button } from '@/components/ui/button';
+// import { Heart, Mail, Lock, Baby, Users } from 'lucide-react';
+// import Image from 'next/image';
+// import Link from 'next/link';
+// import Swal from 'sweetalert2'
+// import { useRouter, useSearchParams } from 'next/navigation';
+// import SocialButtons from '@/components/buttons/SocialButtons';
+// import React, { Suspense } from 'react';
+
+// type LoginFormValues = {
+//   email: string;
+//   password: string;
+//   remember: boolean;
+// };
+
+// const Login: React.FC = () => {
+//   const router = useRouter();
+//   const params = useSearchParams();
+//   const { register, handleSubmit } = useForm<LoginFormValues>();
+
+//   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
+//     // Read callback URL from the URL query
+//     const callbackUrl = params.get("callbackUrl") || "/dashboard";
+//     const result = await signIn('credentials', {
+//       email: data.email,
+//       password: data.password,
+//       remember: data.remember,
+//       redirect: false,
+//       callbackUrl,
+//     });
+
+//     if (!result?.ok) {
+//       Swal.fire("Error", "Email or password not matched", "error");
+//     } else {
+//       Swal.fire({
+//         title: 'Logged in!',
+//         text: 'You have successfully logged in.',
+//         icon: 'success',
+//         confirmButtonText: 'Continue'
+//       }).then(() => {
+//         // redirect user to the requested protected page
+//         router.push(result.url || callbackUrl);
+//       });
+//     }
+//   };
+
+
+//   return (
+//     <Suspense fallback={<div>Loading...</div>}>
+//     <div className="min-h-screen py-10 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
+//       {/* Decorative Background */}
+//       <div className="absolute inset-0">
+//         <div className="absolute top-10 left-10 text-pink-200 opacity-20">
+//           <Heart className="w-32 h-32" />
+//         </div>
+//         <div className="absolute bottom-20 right-20 text-purple-200 opacity-20">
+//           <Baby className="w-40 h-40" />
+//         </div>
+//         <div className="absolute top-1/2 left-1/4 text-pink-100 opacity-10">
+//           <Users className="w-48 h-48" />
+//         </div>
+//       </div>
+
+//       <div className="relative z-10 w-full max-w-md px-4">
+//         <Card className="border-0 shadow-2xl bg-white/90 backdrop-blur-sm">
+//           <CardHeader className="text-center space-y-4">
+//             <div className="flex justify-center">
+//               <Image src="/logo/logo.png" alt="True Care Logo" width={60} height={50} />
+//             </div>
+//             <CardTitle className="text-3xl font-bold bg-gradient-to-r from-[#ff0099] to-[#6632ae] bg-clip-text text-transparent">
+//               Welcome Back
+//             </CardTitle>
+//           </CardHeader>
+
+//           <CardContent className="space-y-6">
+//             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+//               {/* Email */}
+//               <div className="space-y-2">
+//                 <Label>Email</Label>
+//                 <div className="relative">
+//                   <Mail className="absolute left-3 top-3 h-5 w-5 text-[#ff0064]/60" />
+//                   <Input
+//                     type="email"
+//                     placeholder="your@email.com"
+//                     className="pl-10"
+//                     {...register('email', { required: true })}
+//                   />
+//                 </div>
+//               </div>
+
+//               {/* Password */}
+//               <div className="space-y-2">
+//                 <Label>Password</Label>
+//                 <div className="relative">
+//                   <Lock className="absolute left-3 top-3 h-5 w-5 text-[#ff0064]/60" />
+//                   <Input
+//                     type="password"
+//                     placeholder="••••••••"
+//                     className="pl-10"
+//                     {...register('password', { required: true })}
+//                   />
+//                 </div>
+//               </div>
+
+//               {/* Remember Me */}
+//               <div className="flex items-center space-x-2">
+//                 <input
+//                   type="checkbox"
+//                   {...register('remember')}
+//                   className="rounded border-[#6632ae]/30 text-[#ff0099]"
+//                 />
+//                 <Label className="text-sm">Remember me</Label>
+//               </div>
+
+//               <Button
+//                 type="submit"
+//                 className="w-full bg-gradient-to-r from-[#ff0099] to-[#ff0064] text-white py-6 text-lg"
+//               >
+//                 Log In
+//               </Button>
+//             </form>
+
+//             {/* Divider */}
+//             <div className="relative">
+//               <div className="absolute inset-0 flex items-center">
+//                 <span className="w-full border-t border-[#6632ae]/20" />
+//               </div>
+//               <div className="relative flex justify-center text-xs uppercase">
+//                 <span className="bg-white px-4 text-[#323940]/60">Or continue with</span>
+//               </div>
+//             </div>
+
+//             {/* Google Button */}
+//             <SocialButtons/>
+//           </CardContent>
+
+//           <CardFooter className="justify-center">
+//             <p className="text-sm">
+//               Don&apos;t have an account?{' '}
+//               <Link href="/register" className="text-[#ff0099] font-semibold">
+//                 Register
+//               </Link>
+//             </p>
+//           </CardFooter>
+//         </Card>
+//       </div>
+//     </div>
+
+// </Suspense>
+//   );
+// };
+
+// export default Login;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// "use client";
+
+// import { signIn } from "next-auth/react"
+// import { useForm, SubmitHandler } from 'react-hook-form';
+// import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+// import { Input } from '@/components/ui/input';
+// import { Label } from '@/components/ui/label';
+// import { Button } from '@/components/ui/button';
+// import { Heart, Mail, Lock, Baby, Users } from 'lucide-react';
+// import Image from 'next/image';
+// import Link from 'next/link';
+// import Swal from 'sweetalert2'
+// import { useRouter, useSearchParams } from 'next/navigation';
+// import SocialButtons from '@/components/buttons/SocialButtons';
+// import React, { Suspense } from 'react';
+
+// type LoginFormValues = {
+//   email: string;
+//   password: string;
+//   remember: boolean;
+// };
+
+// const Login: React.FC = () => {
+//   const router = useRouter();
+//   const params = useSearchParams();
+//   const { register, handleSubmit } = useForm<LoginFormValues>();
+
+//   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
+//     const callbackUrl = params.get("callbackUrl") || "/dashboard";
+
+//     const result = await signIn('credentials', {
+//       email: data.email,
+//       password: data.password,
+//       remember: data.remember,
+//       redirect: false,
+//       callbackUrl,
+//     });
+
+//     if (!result?.ok) {
+//       Swal.fire("Error", "Email or password not matched", "error");
+//     } else {
+//       Swal.fire({
+//         title: 'Logged in!',
+//         text: 'You have successfully logged in.',
+//         icon: 'success',
+//         confirmButtonText: 'Continue'
+//       }).then(() => {
+//         router.push(result.url || callbackUrl);
+//       });
+//     }
+//   };
+
+//   return (
+    
+// <Suspense fallback={<div>Loading...</div>}>
+
+
+
+
+
+
+//     <div className="min-h-screen py-10 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
+//       {/* Decorative Background */}
+//       <div className="absolute inset-0">
+//         <div className="absolute top-10 left-10 text-pink-200 opacity-20">
+//           <Heart className="w-32 h-32" />
+//         </div>
+//         <div className="absolute bottom-20 right-20 text-purple-200 opacity-20">
+//           <Baby className="w-40 h-40" />
+//         </div>
+//         <div className="absolute top-1/2 left-1/4 text-pink-100 opacity-10">
+//           <Users className="w-48 h-48" />
+//         </div>
+//       </div>
+
+//       <div className="relative z-10 w-full max-w-md px-4">
+//         <Card className="border-0 shadow-2xl bg-white/90 backdrop-blur-sm">
+//           <CardHeader className="text-center space-y-4">
+//             <div className="flex justify-center">
+//               <Image src="/logo/logo.png" alt="True Care Logo" width={60} height={50} />
+//             </div>
+//             <CardTitle className="text-3xl font-bold bg-gradient-to-r from-[#ff0099] to-[#6632ae] bg-clip-text text-transparent">
+//               Welcome Back
+//             </CardTitle>
+//           </CardHeader>
+
+//           <CardContent className="space-y-6">
+//             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+//               <div className="space-y-2">
+//                 <Label>Email</Label>
+//                 <div className="relative">
+//                   <Mail className="absolute left-3 top-3 h-5 w-5 text-[#ff0064]/60" />
+//                   <Input
+//                     type="email"
+//                     placeholder="your@email.com"
+//                     className="pl-10"
+//                     {...register('email', { required: true })}
+//                   />
+//                 </div>
+//               </div>
+
+//               <div className="space-y-2">
+//                 <Label>Password</Label>
+//                 <div className="relative">
+//                   <Lock className="absolute left-3 top-3 h-5 w-5 text-[#ff0064]/60" />
+//                   <Input
+//                     type="password"
+//                     placeholder="••••••••"
+//                     className="pl-10"
+//                     {...register('password', { required: true })}
+//                   />
+//                 </div>
+//               </div>
+
+//               <div className="flex items-center space-x-2">
+//                 <input
+//                   type="checkbox"
+//                   {...register('remember')}
+//                   className="rounded border-[#6632ae]/30 text-[#ff0099]"
+//                 />
+//                 <Label className="text-sm">Remember me</Label>
+//               </div>
+
+//               <Button
+//                 type="submit"
+//                 className="w-full bg-gradient-to-r from-[#ff0099] to-[#ff0064] text-white py-6 text-lg"
+//               >
+//                 Log In
+//               </Button>
+//             </form>
+
+//             <div className="relative">
+//               <div className="absolute inset-0 flex items-center">
+//                 <span className="w-full border-t border-[#6632ae]/20" />
+//               </div>
+//               <div className="relative flex justify-center text-xs uppercase">
+//                 <span className="bg-white px-4 text-[#323940]/60">Or continue with</span>
+//               </div>
+//             </div>
+
+//             <SocialButtons />
+//           </CardContent>
+
+//           <CardFooter className="justify-center">
+//             <p className="text-sm">
+//               Don&apos;t have an account?{' '}
+//               <Link href="/register" className="text-[#ff0099] font-semibold">
+//                 Register
+//               </Link>
+//             </p>
+//           </CardFooter>
+//         </Card>
+//       </div>
+//     </div>
+//     </Suspense>
+//   );
+// };
+
+// export default Login;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// "use client";
+
+// import { signIn } from "next-auth/react"
+// import { useForm, SubmitHandler } from 'react-hook-form';
+// import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+// import { Input } from '@/components/ui/input';
+// import { Label } from '@/components/ui/label';
+// import { Button } from '@/components/ui/button';
+// import { Heart, Mail, Lock, Baby, Users } from 'lucide-react';
+// import Image from 'next/image';
+// import Link from 'next/link';
+// import Swal from 'sweetalert2'
+// import { useRouter, useSearchParams } from 'next/navigation';
+// import SocialButtons from '@/components/buttons/SocialButtons';
+// import React from 'react';
+
+// type LoginFormValues = {
+//   email: string;
+//   password: string;
+//   remember: boolean;
+// };
+
+// const Login: React.FC = () => {
+//   const router = useRouter();
+//   const params = useSearchParams(); // ✅ client hook
+//   const { register, handleSubmit } = useForm<LoginFormValues>();
+
+//   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
+//     const callbackUrl = params.get("callbackUrl") || "/dashboard";
+
+//     const result = await signIn('credentials', {
+//       email: data.email,
+//       password: data.password,
+//       remember: data.remember,
+//       redirect: false,
+//       callbackUrl,
+//     });
+
+//     if (!result?.ok) {
+//       Swal.fire("Error", "Email or password not matched", "error");
+//     } else {
+//       Swal.fire({
+//         title: 'Logged in!',
+//         text: 'You have successfully logged in.',
+//         icon: 'success',
+//         confirmButtonText: 'Continue'
+//       }).then(() => {
+//         router.push(result.url || callbackUrl);
+//       });
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen py-10 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
+//       {/* Decorative Background */}
+//       <div className="absolute inset-0">
+//         <div className="absolute top-10 left-10 text-pink-200 opacity-20">
+//           <Heart className="w-32 h-32" />
+//         </div>
+//         <div className="absolute bottom-20 right-20 text-purple-200 opacity-20">
+//           <Baby className="w-40 h-40" />
+//         </div>
+//         <div className="absolute top-1/2 left-1/4 text-pink-100 opacity-10">
+//           <Users className="w-48 h-48" />
+//         </div>
+//       </div>
+
+//       <div className="relative z-10 w-full max-w-md px-4">
+//         <Card className="border-0 shadow-2xl bg-white/90 backdrop-blur-sm">
+//           <CardHeader className="text-center space-y-4">
+//             <div className="flex justify-center">
+//               <Image src="/logo/logo.png" alt="True Care Logo" width={60} height={50} />
+//             </div>
+//             <CardTitle className="text-3xl font-bold bg-gradient-to-r from-[#ff0099] to-[#6632ae] bg-clip-text text-transparent">
+//               Welcome Back
+//             </CardTitle>
+//           </CardHeader>
+
+//           <CardContent className="space-y-6">
+//             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+//               {/* Email */}
+//               <div className="space-y-2">
+//                 <Label>Email</Label>
+//                 <div className="relative">
+//                   <Mail className="absolute left-3 top-3 h-5 w-5 text-[#ff0064]/60" />
+//                   <Input
+//                     type="email"
+//                     placeholder="your@email.com"
+//                     className="pl-10"
+//                     {...register('email', { required: true })}
+//                   />
+//                 </div>
+//               </div>
+
+//               {/* Password */}
+//               <div className="space-y-2">
+//                 <Label>Password</Label>
+//                 <div className="relative">
+//                   <Lock className="absolute left-3 top-3 h-5 w-5 text-[#ff0064]/60" />
+//                   <Input
+//                     type="password"
+//                     placeholder="••••••••"
+//                     className="pl-10"
+//                     {...register('password', { required: true })}
+//                   />
+//                 </div>
+//               </div>
+
+//               {/* Remember Me */}
+//               <div className="flex items-center space-x-2">
+//                 <input
+//                   type="checkbox"
+//                   {...register('remember')}
+//                   className="rounded border-[#6632ae]/30 text-[#ff0099]"
+//                 />
+//                 <Label className="text-sm">Remember me</Label>
+//               </div>
+
+//               <Button
+//                 type="submit"
+//                 className="w-full bg-gradient-to-r from-[#ff0099] to-[#ff0064] text-white py-6 text-lg"
+//               >
+//                 Log In
+//               </Button>
+//             </form>
+
+//             {/* Divider */}
+//             <div className="relative">
+//               <div className="absolute inset-0 flex items-center">
+//                 <span className="w-full border-t border-[#6632ae]/20" />
+//               </div>
+//               <div className="relative flex justify-center text-xs uppercase">
+//                 <span className="bg-white px-4 text-[#323940]/60">Or continue with</span>
+//               </div>
+//             </div>
+
+//             <SocialButtons />
+//           </CardContent>
+
+//           <CardFooter className="justify-center">
+//             <p className="text-sm">
+//               Don&apos;t have an account?{' '}
+//               <Link href="/register" className="text-[#ff0099] font-semibold">
+//                 Register
+//               </Link>
+//             </p>
+//           </CardFooter>
+//         </Card>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"use client";
+
 import { signIn } from "next-auth/react"
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -346,6 +889,7 @@ import Link from 'next/link';
 import Swal from 'sweetalert2'
 import { useRouter, useSearchParams } from 'next/navigation';
 import SocialButtons from '@/components/buttons/SocialButtons';
+import React, { Suspense } from 'react'; // Added Suspense
 
 type LoginFormValues = {
   email: string;
@@ -353,14 +897,15 @@ type LoginFormValues = {
   remember: boolean;
 };
 
-const Login: React.FC = () => {
+// 1. Move your main logic into a sub-component
+const LoginForm: React.FC = () => {
   const router = useRouter();
-  const params = useSearchParams();
+  const params = useSearchParams(); 
   const { register, handleSubmit } = useForm<LoginFormValues>();
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    // Read callback URL from the URL query
     const callbackUrl = params.get("callbackUrl") || "/dashboard";
+
     const result = await signIn('credentials', {
       email: data.email,
       password: data.password,
@@ -378,12 +923,10 @@ const Login: React.FC = () => {
         icon: 'success',
         confirmButtonText: 'Continue'
       }).then(() => {
-        // redirect user to the requested protected page
         router.push(result.url || callbackUrl);
       });
     }
   };
-
 
   return (
     <div className="min-h-screen py-10 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
@@ -413,7 +956,6 @@ const Login: React.FC = () => {
 
           <CardContent className="space-y-6">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-              {/* Email */}
               <div className="space-y-2">
                 <Label>Email</Label>
                 <div className="relative">
@@ -427,7 +969,6 @@ const Login: React.FC = () => {
                 </div>
               </div>
 
-              {/* Password */}
               <div className="space-y-2">
                 <Label>Password</Label>
                 <div className="relative">
@@ -441,7 +982,6 @@ const Login: React.FC = () => {
                 </div>
               </div>
 
-              {/* Remember Me */}
               <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
@@ -459,7 +999,6 @@ const Login: React.FC = () => {
               </Button>
             </form>
 
-            {/* Divider */}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t border-[#6632ae]/20" />
@@ -469,8 +1008,7 @@ const Login: React.FC = () => {
               </div>
             </div>
 
-            {/* Google Button */}
-            <SocialButtons/>
+            <SocialButtons />
           </CardContent>
 
           <CardFooter className="justify-center">
@@ -487,4 +1025,11 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+// 2. Wrap the sub-component in a Suspense boundary
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
+  );
+}

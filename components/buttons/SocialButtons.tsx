@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { Suspense } from 'react';
 import { Button } from '../ui/button';
 import { signIn } from 'next-auth/react';
 import { toast } from "sonner";
@@ -54,6 +56,8 @@ const handleGoogleSignIn = async () => {
 
 
     return (
+<Suspense fallback={<div>Loading...</div>}>
+
         <div>
             <Button
                 type="button"
@@ -82,6 +86,8 @@ const handleGoogleSignIn = async () => {
                 Sign in with Google
             </Button>
         </div>
+</Suspense>
+        
     );
 };
 
