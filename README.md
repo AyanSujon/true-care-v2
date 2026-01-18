@@ -33,6 +33,7 @@ To explore the admin and user features of the dashboard, you can use the followi
 ## Features
 
 * **Dashboard:** Separate views for Admin and Users
+* **Booking Invoice Email Sent:** After successfully booking a service, the user will receive a confirmation invoice email. 
 * **Service Bookings:** Book caretakers for different services
 * **My Bookings Page:** Track all user bookings with status updates
 * **Authentication:** NextAuth implemented with session proxy
