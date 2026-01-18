@@ -37,55 +37,111 @@
 
 
 
-import type { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+// import type { NextAuthOptions } from "next-auth";
+// import CredentialsProvider from "next-auth/providers/credentials";
+// import GoogleProvider from "next-auth/providers/google";
+// import { loginUser } from "@/actions/server/auth";
+
+// export const authOptions: NextAuthOptions = {
+//   providers: [
+//     CredentialsProvider({
+//       name: "Credentials",
+
+//       credentials: {
+//         email: { label: "Email", type: "email" },
+//         password: { label: "Password", type: "password" },
+//       },
+
+//       async authorize(credentials) {
+//         if (!credentials) return null;
+
+//         const { email, password } = credentials;
+
+//         if (!email || !password) return null;
+
+//         const user = await loginUser({ email, password });
+
+//         if (!user) return null;
+
+//         return {
+//           id: user._id.toString(), 
+//           email: user.email,
+//           name: user.name,
+//         };
+//       },
+//     }),
+
+//     // Google Provider
+//     GoogleProvider({
+//     clientId: process.env.GOOGLE_CLIENT_ID as string,
+//     clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+//   }),
+
+//   ],
+
+//   session: {
+//     strategy: "jwt",
+//   },
+
+//   pages: {
+//     signIn: "/login",
+//   },
+
+//   secret: process.env.NEXTAUTH_SECRET,
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// app/api/auth/[...nextauth]/route.ts
+import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { loginUser } from "@/actions/server/auth";
 
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
-
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-
       async authorize(credentials) {
         if (!credentials) return null;
-
-        const { email, password } = credentials;
-
-        if (!email || !password) return null;
-
-        const user = await loginUser({ email, password });
-
+        const user = await loginUser({ email: credentials.email, password: credentials.password });
         if (!user) return null;
-
-        return {
-          id: user._id.toString(), 
-          email: user.email,
-          name: user.name,
-        };
+        return { id: user._id.toString(), email: user.email, name: user.name };
       },
     }),
-
-    // Google Provider
     GoogleProvider({
-    clientId: process.env.GOOGLE_CLIENT_ID as string,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-  }),
-
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
   ],
-
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as const, // MUST for serverless
   },
-
   pages: {
     signIn: "/login",
   },
-
   secret: process.env.NEXTAUTH_SECRET,
 };
+
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };
