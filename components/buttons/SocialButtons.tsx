@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 const SocialButtons = () => {
     const params = useSearchParams();
     const router = useRouter();
-    const callbackUrl = params.get("callbackUrl") || "/dashboard";
+    const callbackUrl = params.get("callbackUrl") || "/";
 
 const handleGoogleSignIn = async () => {
     try {
