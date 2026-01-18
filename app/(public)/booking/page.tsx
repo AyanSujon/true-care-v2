@@ -681,6 +681,45 @@ export default function BookingPage() {
 
     console.log("Booking submission result:", result);
 
+
+
+
+
+if (!result?.error) {
+  // Show toast
+  toast.success("Booking Request Submitted! 🎉", {
+    description: "We’ll contact you shortly to confirm your appointment.",
+  });
+
+
+
+
+
+  // Send invoice email
+  try {
+    await fetch("/api/send-invoice", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: finalName,
+        email: finalEmail,
+        serviceTitle: service.title,
+        date: format(date, "PPP"),
+        time: selectedTime,
+        duration,
+        totalPrice,
+      }),
+    });
+  } catch (err) {
+    console.error("Failed to send invoice email", err);
+  }
+
+}
+
+
+
+
+
     if (result?.error) {
       toast.error(result.error);
       setSubmitting(false);
@@ -693,6 +732,20 @@ export default function BookingPage() {
     });
     setSubmitting(false);
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
   const isBookingComplete = !!date && !!selectedTime;
 
