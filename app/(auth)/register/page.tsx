@@ -33,7 +33,7 @@
 
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -99,6 +99,7 @@ const Register: React.FC = () => {
   };
 
   return (
+      <Suspense fallback={<div>Loading...</div>}>
     <div className="min-h-screen py-10 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
       {/* Decorative Background Elements */}
       <div className="absolute inset-0">
@@ -256,6 +257,7 @@ const Register: React.FC = () => {
         </p>
       </div>
     </div>
+    </Suspense>
   );
 };
 
